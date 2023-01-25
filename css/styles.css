@@ -39,7 +39,17 @@ body {
 
 }
 .cart-icon {
-    width: 30px;
+    display: block;
+    width: 36px;
+    height: 28px;
+    padding-top: 6px;
+}
+
+.cart-icon-border {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #767272;
+    border-radius: 50%;
 }
 .logo {
     width: 120px;
@@ -79,13 +89,15 @@ body {
 .svg-icon {
     width: 20px;
     height: 30px;
+    cursor: pointer;
 }
 .search-area{
     margin: 30px 0px 10px;
-    padding: 15px;
+    padding: 0px 10px;
     width: 1024px;
     height: 60px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     background: #FFFFFF;
     border: 1px solid #DDDADA;
@@ -93,13 +105,22 @@ body {
     border-radius: 5px;
 }
 .search-input{
-    padding-left: 25px;
-    width: 100%;
+    padding: 10px;
+    width: 870px;
     border: none;
     font-size: 18px;
     line-height: 21px;
     color: #767272;
 }
+
+
+.search-icon{
+    border-radius: 50%; 
+    background-color: #0E49B5;
+    padding: 7px;
+    cursor: pointer;
+}
+
 .product-card {
     max-width: 300px;
     max-height: 480px;
@@ -109,14 +130,17 @@ body {
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     margin: 20px 0px;
+    cursor: pointer;
 }
 .product-card-body {
+
     padding: 0px 25px 20px 14px;
 }
 .product-card-image {
+
     width: 200px;
     height: 200px;
-    margin-bottom: 25px;
+    margin: 10px 0px 25px;
 }
 .footer-product-card {
     height: 86px;
@@ -175,6 +199,7 @@ body {
   
   .column {
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
     flex-basis: 100%;
     flex: 1;

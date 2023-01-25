@@ -10,7 +10,6 @@ function showCards (items) {
         while (counter<6){
             galleryHTML += `
             <div class="product-card column">
-                <a href="" class="product-link link">
                     <div class="product-card-body">
                     <img src="./img/${items[idx].imgUrl}" alt="" class="product-card-image">
                     <h2 class="product-title">${items[idx].name}</h2>
@@ -31,7 +30,6 @@ function showCards (items) {
                                 <p>orders</p></li>
                         </ul>
                     </div>
-                </a>
             </div>`
             counter++;
             idx = randomNumber(items.length)
