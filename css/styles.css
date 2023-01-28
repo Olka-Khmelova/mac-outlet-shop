@@ -26,9 +26,9 @@ body {
 .main-header {
     width: 1024px;
     height: 60px;
-    z-index: 400;
-    top: 0;
     position: fixed;
+    z-index: 1;
+    top: 0;
     background-color: #ffffff;
     box-shadow: 0px 3px 5px rgb(0 0 0 / 20%);
 }
@@ -44,6 +44,9 @@ body {
     height: 28px;
     padding-top: 6px;
 }
+.cart-icon:hover {
+    fill: #ffffff;
+}
 
 .cart-icon-border {
     width: 40px;
@@ -51,10 +54,32 @@ body {
     border: 1px solid #767272;
     border-radius: 50%;
 }
+.cart-icon-border:hover {
+    background-color: #0E49B5;
+}
 .logo {
     width: 120px;
 }
+.cart-btn {
+    position: relative;
+    cursor: pointer;
+}
+.cart-items {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 18px;
+    left: -12px;
+    border-radius: 50%;
+    background-color: #0E49B5;
+    text-align: center;
+    font-size: 14px;
+    line-height: 25px;
+    color: #ffffff;
+}
+
 .hero-section {
+    max-width: 1024px;
     text-align:center;
     display: flex;
     justify-content: center;
@@ -62,29 +87,32 @@ body {
     height: 512px;
     margin: 0 auto;
     margin-top: 60px;
-    background-image: url("/img/banners/airpods_pro_banner.png");
-    background-size: cover;
+    background: url("/img/banners/airpods_pro_banner.png") center/cover no-repeat;
     
 }
+
 .hero-title {
     font-size: 72px;
     line-height: 84px;
     color: #FFFFFF;
     padding-bottom: 22px;
     margin: 0 auto;
-
 }
-.hero-button {
+.order-button {
     width: 150px;
     height: 50px;
     font-size: 20px;
     line-height: 23px;
     background-color: #0E49B5;
+    border: 2px solid #0E49B5;
     color: #FFFFFF;
     border-radius: 5px;
-    border: none;
     cursor: pointer;
     
+}
+.order-button:hover {
+    background-color: transparent;
+    color: #0E49B5;
 }
 .svg-icon {
     width: 20px;
@@ -92,9 +120,10 @@ body {
     cursor: pointer;
 }
 .search-area{
+    
     margin: 30px 0px 10px;
     padding: 0px 10px;
-    width: 1024px;
+    max-width: 1024px;
     height: 60px;
     display: flex;
     justify-content: space-between;
@@ -116,12 +145,21 @@ body {
 
 .search-icon{
     border-radius: 50%; 
+    border: 1px solid #0E49B5;
     background-color: #0E49B5;
     padding: 7px;
     cursor: pointer;
 }
+.search-icon:hover {
+    background-color: #fff;
+    fill: #0E49B5;
+}
+.search-icon path:hover {
+    fill: #fff;
+}
 
 .product-card {
+    position: relative;
     max-width: 300px;
     max-height: 480px;
     text-align: center;
@@ -132,13 +170,20 @@ body {
     margin: 20px 0px;
     cursor: pointer;
 }
+.liked-btn {
+    position: absolute;
+    top: 17px;
+    right: 18px;
+    width: 20px;
+    height: 18px;
+    border: none;
+    background: none;
+}
 .product-card-body {
-
     padding: 0px 25px 20px 14px;
 }
 .product-card-image {
-
-    width: 200px;
+    width: auto;
     height: 200px;
     margin: 10px 0px 25px;
 }
@@ -192,16 +237,13 @@ body {
 .gallery-row {
     display: flex;
     justify-content: space-between;
-    flex-direction: row;
     flex-wrap: wrap;
-    width: 100%;
   }
   
   .column {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    flex-basis: 100%;
     flex: 1;
   }
 /* .filter-section {
@@ -218,9 +260,10 @@ body {
 .filter-col {
     width: 325px;
     height: 374px;
+   
 }
 .filter-section {
-    margin-top: 20px;
+    margin: 20px 0px;
     min-height: 374px;
     background: #ffffff;
     border: 1px solid #DDDADA;
@@ -229,4 +272,147 @@ body {
 }
 .gallery-col {
     width: 640px;
+}
+/*                          cart start                      */
+.cart-subtitle {
+    font-size: 16px;
+    line-height: 30px;
+    color: #767272;
+    padding-bottom: 30px;
+}
+.cart-overlay {
+    position:fixed;
+    top: 0;
+    right: 0;
+    width: 435px;
+    height: auto;
+    background-color: #fff;
+    text-align: center;
+    z-index: 1;
+    padding: 20px 0px;
+    margin-top: 60px;
+    background: #FFFFFF;
+border: 1px solid #E2E2E2;
+border-radius: 5px;
+visibility: hidden;
+}
+.show-cart {
+    transform: translateX(0);
+}
+.cart-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 30px 0px 26px;
+    width: 100%;
+    height: 128px;
+    background: #FFFFFF;
+    border-top: 0.5px solid #C4C4C4;
+}
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 220px;
+
+}
+.cart-item-image {
+    width: 100px;
+    height: 100px;
+
+}
+.cart-text-item {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 20px;
+    color: #000000;
+}
+.cart-text-accent {
+    display: inline-block;
+    font-weight: 700;
+font-size: 12px;
+line-height: 14px;
+background-color: #EAF6FF;
+color: #4191FF;
+text-align: start;
+}
+.count-items {
+    width: 125px;
+    display: flex;
+    justify-content: space-between;
+}
+.cart-footer {
+    width: 100%;
+    height: 50px;
+    background: #EAF6FF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    line-height: 14px;
+    color: #767272;
+    padding: 0px 45px;
+}
+.accent-footer {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    color: #000000;
+}
+.cart-button {
+    width: 250px;
+    height: 40px;
+    background: #3C44B1;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+    color: #FFFFFF;
+    margin: 20px auto;
+    cursor: pointer;
+}
+.arrow-icon {
+    width: 20px;
+    height: 20px;
+    background-color: #3C44B1;
+    fill: #ffffff;
+}
+.close-icon {
+    fill: #F83245;
+    background: #f8324650;
+    border-radius: 50%;
+
+}
+.item-count {
+    font-weight: 700;
+font-size: 20px;
+line-height: 23px;
+color: #4191FF;
+}
+/*                          cart end                      */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 1024px;
+        padding: 15px;
+    }
+    .main-header {
+        max-width: 100%;
+        
+
+    }
+    .hero-section, 
+
+    .search-area,
+    .search-input {
+        width: 100%;
+    }
+    .main-row {
+        display: block;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .filter-col {
+        width: 100%;
+    }
 }
