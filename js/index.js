@@ -17,8 +17,8 @@ class ItemsExample {
         // item-example list 
         this.items = items.map(item => new Item(item));
     }
-    // search by name
 
+    // search by name
     findManyByName(name) {
         const nameAsLowerCase = name.toLowerCase();
         return this.items.filter(item => item.name.toLowerCase().includes(nameAsLowerCase));
@@ -88,33 +88,27 @@ static renderCard(item) {
         }
  }
 
-// class Filter {
-//     #itemsExample = null;
-//     #renderCards = null;
-//     constructor(itemsExample, renderCards){
-//         this.name = '';
-//         this.sort = 'default';
-//         this.#itemsExample = itemsExample;
-//         this.#renderCards = renderCards;
-//     }
-    
-//     setFilter(key, value) {
-//         this[key] = value;
-//         this.#findAndRerender();
-//     }
-    
-//     #findAndRerender() {
-//         const items = this.#itemsExample.findManyByName(this.name);
-//         this.#renderCards.renderCards(items);
-//     }
-// }
-
+ 
 const itemsExample = new ItemsExample();
 const renderCards = new RenderCards(itemsExample);
-// const filter = new Filter(itemsExample, renderCards);
+
 
 const inputName = document.querySelector("#nameSearch");
 inputName.oninput = (event) => {
     const searchItems = itemsExample.findManyByName(event.target.value);
     renderCards.renderCards(searchItems);
+}
+
+let acc = document.getElementsByClassName("accordion-btn");
+
+for (let i = 0; i < acc.length; i++) {
+    
+  acc[i].addEventListener("click", function() {
+    let addcordionPanel= this.nextElementSibling;
+    if (addcordionPanel.style.display === "flex") {
+        addcordionPanel.style.display = "none";
+    }else {
+        addcordionPanel.style.display = "flex";
+    }
+  });
 }
