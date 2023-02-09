@@ -120,7 +120,6 @@ static renderCard(item) {
     }
 
     return cardElement;
-
     }
 
     renderCards(items) {
@@ -145,8 +144,6 @@ inputName.oninput = (event) => {
     const searchItems = itemsExample.findManyByName(event.target.value);
     renderCards.renderCards(searchItems);
 }
-// filter arrow-icons
-
 //filter for sorting by price always open by default
 let accPrice = document.getElementById("btn-price");
 let modalArrowPrice = document.querySelector(".modal-arrow-icon-price");
