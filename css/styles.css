@@ -421,8 +421,7 @@ color: #4191FF;
     cursor: pointer;
     padding-left: 25px;
 }
-.accordion-btn:hover,
-.active {
+.accordion-btn:hover {
     background-color: var(--main-background-color);
 }
 .panel {
@@ -484,27 +483,43 @@ color: #4191FF;
 }
 /*           modal            */
 .modal {
-    width: 80%;
+    max-width: 900px;
     margin: 0 auto;
-    display: none;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     border: 1px solid #E2E2E2;
     border-radius: 5px;
-
+    background-color: var(--main-background-color);
+}
+.modal-back {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, .6);
+    width: 100%;
+    height: 100vh;
+}
+.modal-active {
+    display: flex;
 }
 .modal-img {
-    width: 25%;
+    width: 30%;
+    padding: 10px;
 }
 .modal-info {
-    width: 50%;
+    width: 40%;
     padding: 20px;
     border: 1px solid var(--main-border-color);
     border-top: none;
     border-bottom: none;
 }
 .price-block {
-    width: 25%;
+    width: 30%;
 
 }
 .price-block-title {
@@ -557,7 +572,7 @@ color: #4191FF;
     color: #000000;
 }
 .modal-card-list {
-    width: 96%;
+    width: 300px;
     height: 80px;
     background: #DAE2EA;
     border-radius: 10px;
@@ -594,9 +609,9 @@ color: #4191FF;
         margin: 5px 0px 15px;
     }
 }
-@media (max-width: 900px) {
+@media (max-width: 950px) {
     .panel {
-        padding: 0px 0px 10px;
+        padding: 0px 0px 20px;
     }
     .price-list {
         display: block;
@@ -614,6 +629,12 @@ color: #4191FF;
     .price-block-title {
         font-size: 28px;
         line-height: 34px;
+    }
+    .modal {
+        width: 86%;
+    }
+    .modal-card-list {
+        width: 96%;
     }
 
 }
@@ -665,11 +686,13 @@ color: #4191FF;
         font-size: 22x;
         line-height: 28px;
     }
+
     .modal-info-title {
         font-size: 20px;
         line-height: 24px;
     }
     .modal-card-list {
+        width: 96%;
         font-size: 12px;
         line-height: 14px;
     }
@@ -690,6 +713,12 @@ color: #4191FF;
     }
     .product-card {
         min-width: 190px;
+    }
+    .modal-card-list {
+        display: none;
+    }
+    .modal-info-title {
+        padding: 0px;
     }
 
 }
