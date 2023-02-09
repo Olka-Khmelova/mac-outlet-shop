@@ -424,6 +424,7 @@ color: #4191FF;
 .accordion-btn:hover {
     background-color: var(--main-background-color);
 }
+
 .panel {
     padding: 0px 25px 30px 40px;
     display: block;
@@ -588,6 +589,17 @@ color: #4191FF;
     width: 96%;
     margin: 0 auto;
     margin-top: 30px;
+}
+.modal-button-section,
+.accordion {
+    position: relative;
+}
+.modal-arrow-icon,
+.modal-arrow-icon-price {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    cursor: pointer;
 }
 @media (max-width: 1000px) {
     .main-section {
