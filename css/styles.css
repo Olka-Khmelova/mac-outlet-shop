@@ -275,10 +275,10 @@ label {
 }
 .filter-col {
     width: 34%;
-    height: 374px;
-   
 }
+
 .filter-section {
+
     margin: 20px 0px;
     background: var(--main-background-color);
     border: 1px solid var(--main-border-color);
@@ -406,6 +406,201 @@ line-height: 23px;
 color: #4191FF;
 }
 /*                          cart end                      */
+/*                         accordion                      */
+
+.accordion-btn {
+    width: 100%;
+    height: 45px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+    background-color: var(--product-card-footer-background);
+    border: 1px solid var(--main-border-color);
+    text-align: left;
+    cursor: pointer;
+    padding-left: 25px;
+}
+.accordion-btn:hover {
+    background-color: var(--main-background-color);
+}
+
+.panel {
+    padding: 0px 25px 30px 40px;
+    display: block;
+    flex-direction: column;
+}
+.text-accordion {
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+    cursor: pointer;
+}
+.text-accordion:hover {
+    color: var(--background-buttons-color);
+    font-weight: 700;
+}
+.price-list {
+    width: 242px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+}
+.checkbox-list {
+    width: 120px;
+    height: 35px;
+}
+.input-text {
+    width: 190px;
+    height: 38px;
+    border: 1 px solid #E2E2E2;
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+    text-align: center;
+}
+.checkbox {
+    width: 15px;
+    height: 15px;
+    background: #C4C4C4;
+    cursor: pointer;
+
+}
+.checkbox:hover {
+    background-color: var(--background-buttons-color);
+}
+.chackbox-panel {
+    max-width: 100px;
+    max-height: 200px;
+    padding: 15px 40px;
+    display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-align: left;
+}
+.display-panel {
+    max-height: 220px;
+
+}
+/*           modal            */
+.modal {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #E2E2E2;
+    border-radius: 5px;
+    background-color: var(--main-background-color);
+}
+.modal-back {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, .6);
+    width: 100%;
+    height: 100vh;
+}
+.modal-active {
+    display: flex;
+}
+.modal-img {
+    width: 30%;
+    padding: 10px;
+}
+.modal-info {
+    width: 40%;
+    padding: 20px;
+    border: 1px solid var(--main-border-color);
+    border-top: none;
+    border-bottom: none;
+}
+.price-block {
+    width: 30%;
+
+}
+.price-block-title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 42px;
+    color: #3B3E66;
+}
+.modal-price-item {
+    padding-bottom: 30px;
+}
+.modal-text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: #3B3E66;
+}
+.modal-btn {
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+    line-height: 23px;
+    color: #FFFFFF;
+    background: var(--background-buttons-color);
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+.modal-btn:hover {
+    opacity: 0.8;
+
+}
+.modal-info-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    color: #3B3E66;
+    padding-bottom: 25px;
+}
+.modal-props-item {
+    font-size: 14px;
+    line-height: 16px;
+    color: #767272;
+    text-align: left;
+    padding-bottom: 15px;
+}
+.modal-accent {
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+}
+.modal-card-list {
+    width: 300px;
+    height: 80px;
+    background: #DAE2EA;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0px 10px;
+}
+.info-props {
+    width: 96%;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+.modal-button-section,
+.accordion {
+    position: relative;
+}
+.modal-arrow-icon,
+.modal-arrow-icon-price {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    cursor: pointer;
+}
 @media (max-width: 1000px) {
     .main-section {
         width: 100%;
@@ -426,8 +621,36 @@ color: #4191FF;
         margin: 5px 0px 15px;
     }
 }
+@media (max-width: 950px) {
+    .panel {
+        padding: 0px 0px 20px;
+    }
+    .price-list {
+        display: block;
+    }
+    .input-text {
+        width: 60%;
+    }
+    .price-list label {
+        display: inline-block;
+        width: 30%;
+    }
+    .chackbox-panel {
+        padding: 15px;
+    }
+    .price-block-title {
+        font-size: 28px;
+        line-height: 34px;
+    }
+    .modal {
+        width: 86%;
+    }
+    .modal-card-list {
+        width: 96%;
+    }
 
-@media (max-width: 700px) {
+}
+@media (max-width: 720px) {
     .main-row {
         width: 100%;
     }
@@ -441,18 +664,10 @@ color: #4191FF;
         height: 325px;
         background-color: #000000;
     }
-
-    
-    .filter-col {
-        width: 100%;
-        height: 100px;
-    }
     .filter-section {
-        margin: 0;
-        height: 100px;
+        width: 100%;
     }
-    .gallery-col {
-        margin-top: 10px;
+    .filter-col {
         width: 100%;
     }
     .product-card {
@@ -464,7 +679,9 @@ color: #4191FF;
         width: auto;
         height: 100px;
     }
-
+    .gallery-row {
+        width: 154%;
+    }
     .product-title {
         font-weight: 700;
         font-size: 18px;
@@ -474,12 +691,51 @@ color: #4191FF;
         font-size: 12px;
         line-height: 14px;
     }
+    .chackbox-panel {
+        height: 100px;
+    }
+    .price-block-title {
+        font-size: 22x;
+        line-height: 28px;
+    }
+
+    .modal-info-title {
+        font-size: 20px;
+        line-height: 24px;
+    }
+    .modal-card-list {
+        width: 96%;
+        font-size: 12px;
+        line-height: 14px;
+    }
+    .modal-btn {
+        width: 80%;
+    }
+    .modal-props-item {
+        padding-bottom: 5px;
+    }
+    .modal-price-item {
+        padding-bottom: 10px;
+    }
 }
 @media (max-width: 650px) {
     .gallery-row {
+        width: 154%;
         justify-content: space-around;
     }
     .product-card {
         min-width: 190px;
+    }
+    .modal-card-list {
+        display: none;
+    }
+    .modal-info-title {
+        padding: 0px;
+    }
+
+}
+@media (max-width: 500px) {
+    .chackbox-panel {
+        height: 149px;
     }
 }
