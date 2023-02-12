@@ -17,6 +17,57 @@ class ItemsExample {
         // item-example list 
         this.items = items.map(item => new Item(item));
     }
+    get availableColors() {
+        return this.items
+        .reduce((acc, item) => [...acc, ...item.color], [])
+        .filter((item, index, arr) => arr.indexOf(item) === index)
+        .sort((a, b) => {return a - b});
+    }
+
+    get availableStorage() {
+        return this.items
+            .map(item => item.storage)
+            .filter((item, index, arr) => arr.indexOf(Math.floor(item)) === index && item !== null)
+            .sort((a, b) => {return a - b});
+    }
+
+    get availableOS() {
+        return this.items
+            .map(item => item.os)
+            .filter((item, index, arr) => arr.indexOf(item) === index && item !== null)
+            .sort((a, b) => {return a - b});
+    }
+    // get availableDisplay() {
+    //     return this.items
+    //         .map(item => {
+    //         if (item.display >= 2 && this.display < 5) {
+    //         return '2 - 5 inch';
+    //       } 
+    //       if (item.display >= 5 && this.display < 7) {
+    //         return '5 - 7 inch';
+    //       } 
+    //       if (item.display >= 7 && this.display < 12) {
+    //         return '7 - 12 inch';
+    //       } 
+    //     if (item.display >= 12 && this.display < 16) {
+    //         return '12 - 16 inch';
+    //       } 
+    //       if (item.display >= 16) {
+    //         return '+16 inch';
+    //       } else {
+    //         return 'none';
+    //       }
+    //     })
+    // }
+    get availableDisplay() {
+        // let result = ['2 - 5 inch', '5 - 7 inch', '7 - 12 inch', '12-16', '+16'];
+        // return this.items
+        // .map(item => item.display)
+        // .filter((item, index, arr) => arr.indexOf(item) === index && item !== null)
+        // .sort((a, b) => {return a - b});
+        let result = ['2 - 5 inch', '5 - 7 inch', '7 - 12 inch', '12 - 16 inch', '+16 inch'];
+        return result;
+    }
 
     // search by name
     findManyByName(name) {
@@ -95,6 +146,7 @@ static renderCard(item) {
             </div>
             `;
         const modalBtn = modalContainer.querySelector(".modal-btn");
+        modalBtn.disabled = !item.isAvailableForBuy;
         modalBtn.onclick = (e) => {
             e.stopPropagation();
         }
@@ -134,43 +186,147 @@ static renderCard(item) {
         }
  }
 
+ class Filter {
+    #itemsExample = null;
+    #renderCards = null;
+    constructor(itemsExample, renderCards){
+        this.name = '';
+        this.sort = 'default';
+        this.color = [];
+        this.memory = [];
+        this.ram = [];
+        this.#itemsExample = itemsExample;
+        this.#renderCards = renderCards;
+    }
+    setFilter(key, value) {
+        this[key] = value;
+        this.#searchAndRender();
+    }
+    #searchAndRender() {
+        const items = this.#itemsExample.findManyByName(this.name);
+        this.#renderCards.renderCards(items);
+    }
+ }
  
+class RenderFilters {
+    constructor(itemsExample, filter){
+        this.containerElem = document.querySelector(".accordion-menu")
+        this.filterOptions = [
+            {
+                displayName: 'Color',
+                name: 'color',
+                options: itemsExample.availableColors,
+            },
+            {
+                displayName: 'Memory',
+                name: 'memory',
+                options: itemsExample.availableStorage,
+            },
+            {
+                displayName: 'OS',
+                name: 'os',
+                options: itemsExample.availableOS,
+            },
+            {
+                displayName: 'Display',
+                name: 'display',
+                options: itemsExample.availableDisplay,
+            },
+        ]
+        this.renderFilters(this.filterOptions);
+    }
+    static renderFilter(optionsData){
+        const filter = document.createElement('div');
+        filter.className = 'accordion-container';
+        filter.innerHTML = `<div class="accordion">
+        <button class="accordion-btn">${optionsData.displayName}</button>
+        <img class="modal-arrow-icon" src="./img/icons/arrow-down.svg" alt="modal icon">
+        </div>`
+        const filterList = document.createElement('ul');
+        filterList.className='chackbox-panel';
+        const filterOptionsElements = optionsData.options.map(option => {
+            const filterInfo = document.createElement('li');
+            filterInfo.className = 'checkbox-list';
+            filterInfo.innerHTML = `
+            <input class="checkbox" type="checkbox" id="${option}">
+            <label class="text-accordion" for="${option}">${option}</label>
+            `;
+        return filterInfo;
+        })
+        filterList.append(...filterOptionsElements)
+        filter.append(filterList);
+        return filter;
+    }
+    renderFilters(){
+        this.containerElem.innerHTML = '';
+        const filterElements = this.filterOptions.map(optionsData => RenderFilters.renderFilter(optionsData));
+        this.containerElem.append(...filterElements);
+        
+    }
+
+
+}
+
+
 const itemsExample = new ItemsExample();
 const renderCards = new RenderCards(itemsExample);
+const filter = new Filter(itemsExample, renderCards);
+const renderFilters = new RenderFilters(itemsExample, renderCards);
 
 
 const inputName = document.querySelector("#nameSearch");
 inputName.oninput = (event) => {
-    const searchItems = itemsExample.findManyByName(event.target.value);
-    renderCards.renderCards(searchItems);
+    const {value} = event.target;
+    filter.setFilter('name', value);
 }
-//filter for sorting by price always open by default
-let accPrice = document.getElementById("btn-price");
-let modalArrowPrice = document.querySelector(".modal-arrow-icon-price");
-accPrice.addEventListener("click", function() {
-    let addcordionPrice=document.querySelector(".panel");
-        if (addcordionPrice.style.display === "none") {
-            addcordionPrice.style.display = "flex";
-            modalArrowPrice.src = "./img/icons/arrow-rigth.svg";
-        } else {
-            addcordionPrice.style.display = "none";
-            modalArrowPrice.src= "./img/icons/arrow-down.svg";
-        }
-});
-
-//other filter-accordion's sections
-let acc = document.getElementsByClassName("accordion");
-let modalArrow = document.querySelectorAll(".modal-arrow-icon");
-
-for (let i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-        let addcordionPanel= this.nextElementSibling;
-        if (addcordionPanel.style.display === "flex") {
-            addcordionPanel.style.display = "none";
-            modalArrow[i].src= "./img/icons/arrow-down.svg";
+// selectSort.onchange = (event) => {
+//     const {value} = event.target;
+//     filter.setFilter('sort', value);
+// }
+    //filter for sorting by price always open by default
+    let accPrice = document.getElementById("btn-price");
+    let modalArrowPrice = document.querySelector(".modal-arrow-icon-price");
+    accPrice.addEventListener("click", function() {
+        let addcordionPrice=document.querySelector(".panel");
+            if (addcordionPrice.style.display === "none") {
+                addcordionPrice.style.display = "flex";
+                modalArrowPrice.src = "./img/icons/arrow-rigth.svg";
+            } else {
+                addcordionPrice.style.display = "none";
+                modalArrowPrice.src= "./img/icons/arrow-down.svg";
+            }
+    });
+    
+    //other filter-accordion's sections
+    let acc = document.getElementsByClassName("accordion");
+    let modalArrow = document.querySelectorAll(".modal-arrow-icon");
+    
+    for (let i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+            let addcordionPanel= this.nextElementSibling;
+            if (addcordionPanel.style.display === "flex") {
+                addcordionPanel.style.display = "none";
+                modalArrow[i].src= "./img/icons/arrow-down.svg";
+            }else {
+                addcordionPanel.style.display = "flex";
+                    modalArrow[i].src= "./img/icons/arrow-rigth.svg";
+            }
+      });
+    }
+    
+    let priceFilter =document.querySelector("#price-filter");
+    let dropdownPrice = document.querySelector(".dropdown-filter");
+    priceFilter.addEventListener("click", function() {
+        if (dropdownPrice.style.display === "block") {
+            dropdownPrice.style.display = "none";
         }else {
-            addcordionPanel.style.display = "flex";
-                modalArrow[i].src= "./img/icons/arrow-rigth.svg";
+            dropdownPrice.style.display = "block";
         }
-  });
-}
+    });
+    let dropdownItems = document.getElementsByClassName("dropdown-item");
+    for (let i = 0; i < dropdownItems.length; i++) {
+        dropdownItems[i].addEventListener("click", function() {
+            console.log(dropdownItems[i].innerText === "Ascending");
+            dropdownItems[i].classList.toggle('active');
+        })
+    }
