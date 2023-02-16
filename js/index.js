@@ -116,11 +116,6 @@ class ItemsExample {
         return result.filter((item, index, arr) => arr.indexOf(item) === index);
     }
 
-    // search by name
-    findManyByName(name) {
-        const nameAsLowerCase = name.toLowerCase();
-        return this.items.filter(item => item.name.toLowerCase().includes(nameAsLowerCase));
-    }
     filterItems(filter = {}) {
         const {
             name = '',
