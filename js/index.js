@@ -259,12 +259,18 @@ static renderCard(item) {
     return cardElement;
     }
 
-    renderCards(items) {
+    renderCards(items, sort) {
         // Clear container
+        let itemsList = items;
         this.cardsContainer.innerHTML = '';
-        
         // Cereate elements with cards based on items list
-        const elements = items.map(item => RenderCards.renderCard(item));
+        if(sort === 'asc') {                    
+            itemsList.sort((a,b) => {return a.price - b.price})
+        } 
+        if(sort === 'desc') {                    
+            itemsList.sort((a,b) => {return b.price - a.price})
+        }
+        const elements = itemsList.map(item => RenderCards.renderCard(item));
         
         // show cards 
         this.cardsContainer.append(...elements);
@@ -303,7 +309,7 @@ static renderCard(item) {
 
     #searchAndRender() {
         const items = this.#itemsExample.filterItems({...this});
-        this.#renderCards.renderCards(items);
+        this.#renderCards.renderCards(items, this.sort);
     }
  }
  
