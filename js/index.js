@@ -155,8 +155,10 @@ class ItemsExample {
 
 
 class RenderCards {
-    constructor(ItemsExample){
+    cart = null;
+    constructor(ItemsExample, cart){
          this.cardsContainer = document.querySelector('.gallery-row'); // cards-container
+         this.cart = cart;
          this.renderCards(ItemsExample.items); // Auto render cards 
     }
 static renderCard(item) {
@@ -171,7 +173,7 @@ static renderCard(item) {
                 <h2 class="product-title">${item.name}</h2>
                 <p class="left-in-stock">${item.orderInfo.inStock} left in stock</p>
                 <p class="price">Price: ${item.price} $</p>
-                <button type="button" class="order-button">Add to cart</button>
+                <button type="button" class="order-button ">Add to cart</button>
             </div>
                 <div class="footer-product-card">
                     <ul class="product-card-list list">
@@ -229,6 +231,9 @@ static renderCard(item) {
         modalBtn.disabled = !item.isAvailableForBuy;
         modalBtn.onclick = (e) => {
             e.stopPropagation();
+            cart.addToCart(item);
+            renderCart.renderCartItems(cart.items);
+
         }
         modalElement.classList.add("modal-active");
         return modalContainer;
@@ -249,6 +254,8 @@ static renderCard(item) {
     cardBtn.disabled = !item.isAvailableForBuy;
     cardBtn.onclick = (e) => {
         e.stopPropagation();
+        cart.addToCart(item);
+        renderCart.renderCartItems(cart.items);
     }
 
     return cardElement;
@@ -265,7 +272,7 @@ static renderCard(item) {
         if(sort === 'desc') {                    
             itemsList.sort((a,b) => {return b.price - a.price})
         }
-        const elements = itemsList.map(item => RenderCards.renderCard(item));
+        const elements = itemsList.map(item => RenderCards.renderCard.call(this, item));
         
         // show cards 
         this.cardsContainer.append(...elements);
@@ -410,11 +417,151 @@ class RenderFilters {
     }
 }
 
+class Cart {
+    constructor() {
+      this.items = [];
+    }
+  
+    addToCart(item) {
+      const id = item.id;
+      const itemInCart = this.items.find(goodItem => goodItem.id === id);
+  
+      if (itemInCart) {
+        if (itemInCart.amount < 4) {
+          itemInCart.amount++;
+        }
+        return itemInCart;
+      }
+      const addedItemToCart = {
+        id,
+        item,
+        amount: 1,
+      };
+      return this.items.push(addedItemToCart);
+    }
+  
+    get totalAmount() {
+      return this.items.reduce((acc, goodItem) => {
+        return acc + goodItem.amount;
+      }, 0);
+    }
+  
+    get totalPrice() {
+      return this.items.reduce((acc, goodItem) => {
+        return acc + goodItem.amount * goodItem.item.price;
+      }, 0);
+    }
+  
+    minusItem(item) {
+      const id = item.id;
+      const itemInCart = this.items.find(goodItem => goodItem.id === id);
+      if (itemInCart.amount > 1) {
+        itemInCart.amount--;
+      }
+  
+      return cart.items;
+    }
+  
+    removeItem(item){
+        item.amount = 0;
+        let result = this.items.filter(it => it.amount > 0);
+        console.log(result);
+        this.items = result;
+    }
+  }
+  
+  class RenderCart {
+    constructor() {
+      this.cartContainer = document.querySelector('.cart');
+      this.renderCartItems(cart.items);
+      this.showModalCart();
+    }
+  
+    renderCartItem(item) {
+        console.log(item)
+      const cartBody = document.createElement('div');
+      cartBody.className = 'cart-content';
+      cartBody.innerHTML = `  
+      <div class="cart-item">
+            <img class="cart-item-image" src="./img/${item.item.imgUrl}" alt="${item.item.name}">
+            <div>
+            <p class="cart-text-item">
+            ${item.item.name}
+            </p>
+            <span class="cart-text-accent">$ ${item.item.price}</span>
+            </div>
+            <div class="count-items">
+                <button class="cart-product_decrease-btn"></button>
+                <span class="item-count">${item.amount}</span>
+                <button class="cart-product_add-btn"></button>
+                <button class="cart-product_remove-btn"><div class="cart-product_remove-btn_sign">sign</div></button>
+            </div>
+        `;
+        // total amount
+        const totalAmount = document.querySelector('.total-amount');
+        totalAmount.innerHTML = `${cart.totalAmount} ptc.`;
+
+        // cart counter
+        const cartCounter = document.querySelector('.cart-count');
+                cartCounter.innerText = `${cart.totalAmount}`;
+    
+        // total price
+        const totalPrice = document.querySelector('.total-price');
+        totalPrice.innerHTML = `${cart.totalPrice}$`;
+
+        // decrease
+        const decreaseBtn = cartBody.querySelector('.cart-product_decrease-btn');
+        decreaseBtn.addEventListener ('click', () => {
+            cart.minusItem(item); 
+            renderCart.renderCartItems(cart.items);
+        });
+
+        // add
+        const addBtn = cartBody.querySelector('.cart-product_add-btn');
+        addBtn.addEventListener ('click', () => {
+            cart.addToCart(item); 
+            renderCart.renderCartItems(cart.items);
+        })
+
+        // remove
+        const removeBtn = cartBody.querySelector('.cart-product_remove-btn');
+        removeBtn.addEventListener ('click', () => {
+            cart. removeItem(item); 
+            renderCart.renderCartItems(cart.items);
+            totalAmount.innerHTML = `${cart.totalAmount} ptc.`;
+            totalPrice.innerHTML = `${cart.totalPrice} $`;
+        })
+            return cartBody;
+    }
+    renderCartItems(items) {
+   
+        this.cartContainer.innerHTML = ``;
+
+        let goods = items.map(item => {
+          return this.renderCartItem(item);
+        });
+        return this.cartContainer.append(...goods);
+      }
+
+      showModalCart() {
+        const cartBtn = document.querySelector('.cart-btn');
+        const cartWindow = document.querySelector('.cart-overlay');
+
+        cartBtn.addEventListener('click', () => {
+            cartWindow.classList.toggle('active');        
+        })
+
+    }
+    
+}
 
 const itemsExample = new ItemsExample();
-const renderCards = new RenderCards(itemsExample);
+const cart = new Cart();
+const renderCart = new RenderCart(cart);
+const renderCards = new RenderCards(itemsExample, cart, renderCart);
 const filter = new Filter(itemsExample, renderCards);
 const renderFilters = new RenderFilters(itemsExample, filter);
+
 
 
 
