@@ -279,9 +279,11 @@ static renderCard(item) {
         }
  }
 
+
  class Filter {
     #itemsExample = null;
     #renderCards = null;
+
     constructor(itemsExample, renderCards){
         this.#itemsExample = itemsExample;
         this.#renderCards = renderCards;
@@ -294,6 +296,7 @@ static renderCard(item) {
         this.minPrice = this.#itemsExample.minPrice;
         this.maxPrice = this.#itemsExample.maxPrice;
     }
+
     setFilter(key, value) {
 
         if(!Array.isArray(this[key])) {
@@ -315,6 +318,7 @@ static renderCard(item) {
     }
  }
  
+
 class RenderFilters {
 
     #filter = null;
@@ -343,6 +347,7 @@ class RenderFilters {
                 options: itemsExample.availableDisplay,
             },
         ]
+
         this.inputName = document.querySelector('#nameSearch');
         this.selectSort = document.querySelector('#multi-select');
 
@@ -374,6 +379,8 @@ class RenderFilters {
 
         this.renderFilters(this.filterOptions);
     }
+
+
      renderFilter(optionsData){
         const filter = document.createElement('div');
         filter.className = 'accordion-container';
@@ -406,6 +413,7 @@ class RenderFilters {
         filter.append(filterList);
         return filter;
     }
+
     renderFilters(){
 
         this.containerElem.innerHTML = '';
@@ -415,6 +423,7 @@ class RenderFilters {
         
     }
 }
+
 
 class Cart {
     constructor() {
@@ -468,6 +477,7 @@ class Cart {
     }
   }
   
+
   class RenderCart {
     constructor() {
       this.cartContainer = document.querySelector('.cart');
@@ -532,6 +542,7 @@ class Cart {
         })
             return cartBody;
     }
+
     renderCartItems(items) {
    
         this.cartContainer.innerHTML = ``;
@@ -554,10 +565,12 @@ class Cart {
     
 }
 
+
 class Slider {
     constructor(ItemsExample) {
         this.containerSlider = document.querySelector('.hero');
         this.items = ItemsExample.items;
+
         this.bannersProducts = [
             {id: 29,
             name: 'Apple TV',
@@ -616,6 +629,7 @@ class Slider {
     }
 }
 
+
 const itemsExample = new ItemsExample();
 const cart = new Cart();
 const renderCart = new RenderCart(cart);
@@ -623,6 +637,7 @@ const renderCards = new RenderCards(itemsExample, cart, renderCart);
 const filter = new Filter(itemsExample, renderCards);
 const renderFilters = new RenderFilters(itemsExample, filter);
 const slider = new Slider(itemsExample);
+
 
     //filter for sorting by price always open by default
     let accPrice = document.getElementById("btn-price");

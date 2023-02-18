@@ -748,6 +748,7 @@ option:checked {
     background-color: var(--product-card-footer-background);
     border-radius: 15px;
 }
+
 @media (max-width: 1000px) {
     .cart-overlay {
         right: 0;
@@ -798,8 +799,8 @@ option:checked {
     .modal-card-list {
         width: 96%;
     }
-
 }
+
 @media (max-width: 720px) {
     .main-row {
         width: 100%;
@@ -848,7 +849,6 @@ option:checked {
         font-size: 22x;
         line-height: 28px;
     }
-
     .modal-info-title {
         font-size: 20px;
         line-height: 24px;
@@ -868,6 +868,7 @@ option:checked {
         padding-bottom: 10px;
     }
 }
+
 @media (max-width: 670px) {
     .hero-section {
         background-size: 100%;
