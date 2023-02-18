@@ -402,7 +402,6 @@ class RenderFilters {
             return filterInfo;
           });
 
-
         filterList.append(...filterOptionsElements)
         filter.append(filterList);
         return filter;
@@ -465,7 +464,6 @@ class Cart {
     removeItem(item){
         item.amount = 0;
         let result = this.items.filter(it => it.amount > 0);
-        console.log(result);
         this.items = result;
     }
   }
@@ -478,7 +476,6 @@ class Cart {
     }
   
     renderCartItem(item) {
-        console.log(item)
       const cartBody = document.createElement('div');
       cartBody.className = 'cart-content';
       cartBody.innerHTML = `  
@@ -504,6 +501,7 @@ class Cart {
         // cart counter
         const cartCounter = document.querySelector('.cart-count');
                 cartCounter.innerText = `${cart.totalAmount}`;
+                
     
         // total price
         const totalPrice = document.querySelector('.total-price');
@@ -530,6 +528,7 @@ class Cart {
             renderCart.renderCartItems(cart.items);
             totalAmount.innerHTML = `${cart.totalAmount} ptc.`;
             totalPrice.innerHTML = `${cart.totalPrice} $`;
+            cartCounter.innerText = `${cart.totalAmount}`;
         })
             return cartBody;
     }
@@ -555,15 +554,75 @@ class Cart {
     
 }
 
+class Slider {
+    constructor(ItemsExample) {
+        this.containerSlider = document.querySelector('.hero');
+        this.items = ItemsExample.items;
+        this.bannersProducts = [
+            {id: 29,
+            name: 'Apple TV',
+            banner: 'apple_tv_banner.png',}, 
+            {id: 33,
+            name: 'AirPods Max',
+            banner: 'air_pods_max_banner.jpg'}, 
+            {id: 32,
+            name: 'AirPods Pro',
+            banner: 'airpods_pro_banner.png'}, 
+            {id: 34,
+            name: 'IPad Air',
+            banner: 'ipad_air_banner.jpg'}, 
+            {id: 7,
+            name: 'IMac',
+            banner: 'mac_book_banner.jpg'}, 
+            {id: 13,
+            name: 'Apple Watch Series 6',
+            banner: 'watch_banner.jpg'},
+        ];
+        this.renderSlider();
+
+    }
+
+    renderSlider(){       
+        const delay = 4000;
+        const items = this.items;
+        const imgLinks = this.bannersProducts;
+        let currentItem = function() {
+           return imgLinks[Math.floor(Math.random() * imgLinks.length)];
+        }
+  
+        const start = function() {
+            const bannerItem = currentItem();
+            const heroTitle = document.querySelector('.hero-title');
+            const bannerBTN = document.querySelector('#bannerBTN');
+            const container = document.querySelector('.hero-section');
+            container.style.backgroundImage = `url("/img/banners/${bannerItem.banner}")`;
+            heroTitle.innerText = `${bannerItem.name}`
+
+            bannerBTN.onclick = (e) => {
+                e.stopPropagation();
+  
+                const itemToAdd = items.find(goodItem => goodItem.id === bannerItem.id);
+  
+                cart.addToCart(itemToAdd);
+                renderCart.renderCartItems(cart.items);
+            }
+        }
+
+        start();
+
+        setInterval(function() {
+            start();
+        }, delay);
+    }
+}
+
 const itemsExample = new ItemsExample();
 const cart = new Cart();
 const renderCart = new RenderCart(cart);
 const renderCards = new RenderCards(itemsExample, cart, renderCart);
 const filter = new Filter(itemsExample, renderCards);
 const renderFilters = new RenderFilters(itemsExample, filter);
-
-
-
+const slider = new Slider(itemsExample);
 
     //filter for sorting by price always open by default
     let accPrice = document.getElementById("btn-price");

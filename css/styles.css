@@ -80,17 +80,19 @@
     height: 512px;
     margin-top: 60px;
     background: url("/img/banners/airpods_pro_banner.png") center/cover no-repeat;
-    background-size: 100% 100%;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 20;
+
+    box-shadow: 0px 0px 15px var(--box-shadow-color);
     
 }
 .hero-title {
     font-size: 72px;
     line-height: 84px;
     color: #FFFFFF;
+    text-shadow: black 0px 0px 8px; /* color offset-x offset-y blur-radius */
     padding-bottom: 22px;
 }
 .order-button {
@@ -105,7 +107,9 @@
     cursor: pointer;
     
 }
-
+.slider-btn {
+    box-shadow: 5px 15px 15px rgba(0, 0, 0, 0.6);
+}
 .order-button:hover {
     background-color: transparent;
     color: var(--background-buttons-color);
@@ -581,7 +585,7 @@ color: #4191FF;
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 100;
     background-color: rgba(0, 0, 0, .6);
     width: 100%;
     height: 100vh;
@@ -865,9 +869,13 @@ option:checked {
     }
 }
 @media (max-width: 670px) {
+    .hero-section {
+        background-size: 100%;
+        height: 280px;
+    }
     .gallery-row {
         width: 154%;
-        justify-content: space-around;
+        justify-content: space-evenly;
     }
     .product-card {
         min-width: 190px;
@@ -882,8 +890,12 @@ option:checked {
         height: 200px;
     }
 }
-@media (max-width: 540px) {
+@media (max-width: 570px) {
     .chackbox-panel {
         height: 230px;
+    }
+    .hero-section {
+        background-size: 100%;
+        height: 240px;
     }
 }
